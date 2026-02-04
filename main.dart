@@ -2039,12 +2039,15 @@ class _AbaBalanco extends StatelessWidget {
     Map<String, double> gastosPorCategoria = {};
 
     for (var t in transacoesFiltradas) {
+      if (t.categoria == 'Pagamento Fatura') {
+        continue;
+      }
       if (t.isEntrada) {
         entradas += t.valor;
       } else {
         saidas += t.valor;
         // Soma para o ranking (apenas saídas, excluindo transferências de investimento e pagamento de faturas)
-        if (t.categoria != 'Investimento' && t.categoria != 'Aporte' && t.categoria != 'Pagamento Fatura') {
+        if (t.categoria != 'Investimento' && t.categoria != 'Aporte') {
           gastosPorCategoria[t.categoria] = (gastosPorCategoria[t.categoria] ?? 0) + t.valor;
         }
       }
